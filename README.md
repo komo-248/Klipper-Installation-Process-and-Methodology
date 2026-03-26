@@ -1,6 +1,42 @@
-# Klipper - Installation Process and Methodology
+# Klipper – Sovol SV05 on Inovato Quadra
 
 Klipper firmware installation, configuration, and tuning for the **Sovol SV05** (CoreXY Ender-5 clone) running on an **Inovato Quadra** SBC (Allwinner H616, Armbian). Covers OS setup, KIAUH stack installation, firmware flashing, and a full calibration workflow through input shaping and pressure advance.
+
+---
+
+## Results
+
+<p align="center">
+  <img src="images/boat_new.jpg" width="500"/>
+</p>
+
+**Input Shaping — X Axis**
+<p align="center"><em>Before &nbsp;|&nbsp; After</em></p>
+<p align="center">
+  <img src="images/x_old.jpg" width="440"/>
+  <img src="images/x_new.jpg" width="440"/>
+</p>
+
+**Input Shaping — Y Axis**
+<p align="center"><em>Before &nbsp;|&nbsp; After</em></p>
+<p align="center">
+  <img src="images/y_old.jpg" width="440"/>
+  <img src="images/y_new.png" width="440"/>
+</p>
+
+**Benchy — Overhang**
+<p align="center"><em>Before &nbsp;|&nbsp; After</em></p>
+<p align="center">
+  <img src="images/Boat_old_overhang.jpg" width="440"/>
+  <img src="images/Boat_new_overhang.jpg" width="440"/>
+</p>
+
+**Benchy — Ringing / Stringing**
+<p align="center"><em>Before &nbsp;|&nbsp; After</em></p>
+<p align="center">
+  <img src="images/Boat_old_ringing.jpg" width="440"/>
+  <img src="images/Boat_new_ringing.jpg" width="440"/>
+</p>
 
 ---
 
