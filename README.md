@@ -6,10 +6,6 @@ Klipper firmware installation, configuration, and tuning for the **Sovol SV05** 
 
 ## Results
 
-<p align="center">
-  <img src="images/boat_new.jpg" width="800"/>
-</p>
-
 **Input Shaping — X Axis**
 <p align="center"><em>Before &nbsp;|&nbsp; After</em></p>
 <p align="center">
