@@ -7,35 +7,35 @@ Klipper firmware installation, configuration, and tuning for the **Sovol SV05** 
 ## Results
 
 <p align="center">
-  <img src="images/boat_new.jpg" width="500"/>
+  <img src="images/boat_new.jpg" width="800"/>
 </p>
 
 **Input Shaping — X Axis**
 <p align="center"><em>Before &nbsp;|&nbsp; After</em></p>
 <p align="center">
-  <img src="images/x_old.jpg" width="440"/>
-  <img src="images/x_new.jpg" width="440"/>
+  <img src="images/x_old.jpg" width="400"/>
+  <img src="images/x_new.jpg" width="400"/>
 </p>
 
 **Input Shaping — Y Axis**
 <p align="center"><em>Before &nbsp;|&nbsp; After</em></p>
 <p align="center">
-  <img src="images/y_old.jpg" width="440"/>
-  <img src="images/y_new.png" width="440"/>
+  <img src="images/y_old.jpg" width="400"/>
+  <img src="images/y_new.png" width="400"/>
 </p>
 
 **Benchy — Overhang**
 <p align="center"><em>Before &nbsp;|&nbsp; After</em></p>
 <p align="center">
-  <img src="images/Boat_old_overhang.jpg" width="440"/>
-  <img src="images/Boat_new_overhang.jpg" width="440"/>
+  <img src="images/Boat_old_overhang.jpg" width="400"/>
+  <img src="images/Boat_new_overhang1.jpg" width="400"/>
 </p>
 
 **Benchy — Ringing / Stringing**
 <p align="center"><em>Before &nbsp;|&nbsp; After</em></p>
 <p align="center">
-  <img src="images/Boat_old_ringing.jpg" width="440"/>
-  <img src="images/Boat_new_ringing.jpg" width="440"/>
+  <img src="images/Boat_old_ringing.jpg" width="400"/>
+  <img src="images/Boat_new_ringing1.jpg" width="400"/>
 </p>
 
 ---
