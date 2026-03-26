@@ -35,7 +35,7 @@ Klipper firmware installation, configuration, and tuning for the **Sovol SV05** 
 <p align="center"><em>Before &nbsp;|&nbsp; After</em></p>
 <p align="center">
   <img src="images/Boat_old_ringing.jpg" width="400"/>
-  <img src="images/Boat_new_ringing1.jpg" width="360"/>
+  <img src="images/Boat_new_ringing1.jpg" width="375"/>
 </p>
 
 ---
