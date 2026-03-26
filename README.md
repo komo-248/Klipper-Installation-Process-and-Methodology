@@ -1,4 +1,4 @@
-# Klipper – Sovol SV05 on Inovato Quadra
+# Klipper – Installation Process, Methodology, and Results
 
 Klipper firmware installation, configuration, and tuning for the **Sovol SV05** (CoreXY Ender-5 clone) running on an **Inovato Quadra** SBC (Allwinner H616, Armbian). Covers OS setup, KIAUH stack installation, firmware flashing, and a full calibration workflow through input shaping and pressure advance.
 
