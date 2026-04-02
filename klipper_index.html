@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Klipper – Sovol SV05</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #f7f6f3; --surface: #ffffff; --border: #e4e2dc;
+      --text: #1a1917; --muted: #7a7870; --accent: #2a5caa;
+      --accent-soft: #eef2fa; --tag-bg: #eeece8; --tag-text: #4a4840;
+      --mono: 'DM Mono', monospace; --sans: 'DM Sans', sans-serif;
+    }
+    html { scroll-behavior: smooth; }
+    body { font-family: var(--sans); background: var(--bg); color: var(--text); font-size: 15px; line-height: 1.6; -webkit-font-smoothing: antialiased; }
+    .container { max-width: 900px; margin: 0 auto; padding: 0 32px; }
+    header { padding: 56px 0 48px; border-bottom: 1px solid var(--border); opacity: 0; animation: fadeUp 0.6s ease forwards; }
+    .back-link { display: inline-flex; align-items: center; gap: 6px; font-family: var(--mono); font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); text-decoration: none; margin-bottom: 32px; transition: color 0.2s; }
+    .back-link:hover { color: var(--accent); }
+    .back-link svg { width: 13px; height: 13px; stroke: currentColor; fill: none; }
+    .hero-label { font-family: var(--mono); font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); margin-bottom: 12px; }
+    h1 { font-family: var(--mono); font-size: clamp(24px, 4vw, 36px); font-weight: 400; letter-spacing: -0.02em; line-height: 1.15; margin-bottom: 16px; }
+    .hero-desc { font-size: 15px; color: var(--muted); font-weight: 300; max-width: 620px; line-height: 1.65; margin-bottom: 24px; }
+    .hero-links { display: flex; gap: 10px; flex-wrap: wrap; }
+    .btn { display: inline-flex; align-items: center; gap: 6px; font-family: var(--mono); font-size: 11px; letter-spacing: 0.05em; text-transform: uppercase; text-decoration: none; padding: 7px 14px; border-radius: 3px; border: 1px solid var(--border); color: var(--muted); transition: all 0.15s; }
+    .btn:hover { border-color: var(--accent); color: var(--accent); }
+    .btn.primary { background: var(--accent); border-color: var(--accent); color: #fff; }
+    .btn.primary:hover { background: #1e4a8a; border-color: #1e4a8a; }
+    .btn svg { width: 12px; height: 12px; stroke: currentColor; fill: none; }
+    .section { padding: 48px 0; border-bottom: 1px solid var(--border); opacity: 0; animation: fadeUp 0.5s ease forwards; }
+    .section:last-of-type { border-bottom: none; }
+    .section-label { font-family: var(--mono); font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); margin-bottom: 24px; display: flex; align-items: center; gap: 10px; }
+    .section-label::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+    .spec-table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+    .spec-table th { font-family: var(--mono); font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); text-align: left; padding: 10px 14px; border-bottom: 1px solid var(--border); background: var(--bg); }
+    .spec-table td { padding: 11px 14px; border-bottom: 1px solid var(--border); color: var(--text); vertical-align: top; }
+    .spec-table tr:last-child td { border-bottom: none; }
+    .spec-table td:first-child { font-weight: 500; min-width: 160px; }
+    .spec-table code { font-family: var(--mono); font-size: 12px; background: var(--tag-bg); padding: 2px 6px; border-radius: 2px; }
+
+    /* STEPS */
+    .steps { display: flex; flex-direction: column; gap: 1px; background: var(--border); border: 1px solid var(--border); }
+    .step { background: var(--surface); padding: 20px 24px; display: flex; gap: 20px; align-items: baseline; }
+    .step-num { font-family: var(--mono); font-size: 11px; color: var(--accent); min-width: 24px; font-weight: 500; }
+    .step-title { font-size: 14px; font-weight: 500; margin-bottom: 3px; }
+    .step-desc { font-size: 13px; color: var(--muted); font-weight: 300; }
+
+    /* GALLERY */
+    .gallery { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--border); border: 1px solid var(--border); }
+    .gallery-pair { background: var(--surface); padding: 20px; }
+    .gallery-pair-label { font-family: var(--mono); font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); margin-bottom: 12px; text-align: center; }
+    .gallery-pair-imgs { display: flex; gap: 8px; }
+    .gallery-pair-imgs img { width: 50%; object-fit: cover; border-radius: 2px; }
+    .gallery-full { grid-column: span 2; background: var(--surface); padding: 20px; }
+    .gallery-full img { width: 100%; max-height: 340px; object-fit: cover; border-radius: 2px; }
+
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+    .section:nth-child(2) { animation-delay: 0.05s; }
+    .section:nth-child(3) { animation-delay: 0.10s; }
+    .section:nth-child(4) { animation-delay: 0.15s; }
+    .section:nth-child(5) { animation-delay: 0.20s; }
+    footer { padding: 28px 0; border-top: 1px solid var(--border); }
+    .footer-inner { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
+    .footer-inner span, .footer-inner a { font-family: var(--mono); font-size: 11px; color: var(--muted); text-decoration: none; letter-spacing: 0.04em; transition: color 0.15s; }
+    .footer-inner a:hover { color: var(--accent); }
+    @media (max-width: 600px) { .container { padding: 0 20px; } .gallery { grid-template-columns: 1fr; } .gallery-full { grid-column: span 1; } }
+  </style>
+</head>
+<body>
+<div class="container">
+
+  <header>
+    <a class="back-link" href="https://komo-248.github.io/komo.github.io">
+      <svg viewBox="0 0 24 24" stroke-width="1.6"><polyline points="15 18 9 12 15 6"/></svg>
+      Portfolio
+    </a>
+    <div class="hero-label">Controls & Embedded Systems</div>
+    <h1>Klipper – Sovol SV05</h1>
+    <p class="hero-desc">Full Klipper firmware installation and systematic calibration on a Sovol SV05 running on an Inovato Quadra SBC. Covers OS setup, KIAUH stack, firmware flashing, PID tuning, input shaping with ADXL345, and pressure advance optimization.</p>
+    <div class="hero-links">
+      <a class="btn primary" href="https://github.com/komo-248/Klipper-Installation-Process-and-Methodology/tree/main" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" stroke-width="1.6"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+        GitHub
+      </a>
+    </div>
+  </header>
+
+  <!-- HARDWARE -->
+  <section class="section">
+    <div class="section-label">Hardware</div>
+    <table class="spec-table">
+      <thead><tr><th>Component</th><th>Details</th></tr></thead>
+      <tbody>
+        <tr><td>Host SBC</td><td>Inovato Quadra — Allwinner H616 octa-core, Armbian</td></tr>
+        <tr><td>Printer</td><td>Sovol SV05 — CoreXY Ender-5 clone</td></tr>
+        <tr><td>MCU</td><td>Creality 4.2.2 32-bit (GD32F303VET6, STM32F103-style, 28 KiB bootloader)</td></tr>
+        <tr><td>Accelerometer</td><td>ADXL345 — input shaping measurement</td></tr>
+        <tr><td>Camera</td><td>Arducam USB — Crowsnest webcam integration</td></tr>
+        <tr><td>OS</td><td><code>Armbian-unofficial_24.5.0-trunk_Inovato-quadra_bookworm_current_6.6.22</code></td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- CALIBRATION STEPS -->
+  <section class="section">
+    <div class="section-label">Calibration Workflow</div>
+    <div class="steps">
+      <div class="step"><div class="step-num">01</div><div><div class="step-title">Mechanical Checks</div><div class="step-desc">Frame squaring, belt tension, axis motion verification</div></div></div>
+      <div class="step"><div class="step-num">02</div><div><div class="step-title">PID Tuning</div><div class="step-desc">Hotend and bed PID calibration via Klipper's built-in command</div></div></div>
+      <div class="step"><div class="step-num">03</div><div><div class="step-title">Extruder Calibration</div><div class="step-desc">E-step measurement and rotation_distance adjustment</div></div></div>
+      <div class="step"><div class="step-num">04</div><div><div class="step-title">Bed Mesh & Z-Offset</div><div class="step-desc">5×5 BLTouch mesh, probe calibration, first layer validation</div></div></div>
+      <div class="step"><div class="step-num">05</div><div><div class="step-title">Flow Rate</div><div class="step-desc">Single-wall cube measurement, extrusion multiplier adjustment</div></div></div>
+      <div class="step"><div class="step-num">06</div><div><div class="step-title">Temperature Tower</div><div class="step-desc">TUNING_TOWER from 195→220°C, 5°C steps every 5mm</div></div></div>
+      <div class="step"><div class="step-num">07</div><div><div class="step-title">Retraction</div><div class="step-desc">Distance and speed towers — optimized to 3.8mm @ 60mm/s</div></div></div>
+      <div class="step"><div class="step-num">08</div><div><div class="step-title">Pressure Advance</div><div class="step-desc">TUNING_TOWER from 0, factor 0.005/layer until corners sharpen</div></div></div>
+      <div class="step"><div class="step-num">09</div><div><div class="step-title">Input Shaping</div><div class="step-desc">ADXL345 resonance measurement on X and Y, CALIBRATE_SHAPER</div></div></div>
+      <div class="step"><div class="step-num">10</div><div><div class="step-title">Speed & Acceleration</div><div class="step-desc">Max accel capped at 2000 mm/s² — above this causes seam separation</div></div></div>
+    </div>
+  </section>
+
+  <!-- RESULTS GALLERY -->
+  <section class="section">
+    <div class="section-label">Results</div>
+    <div class="gallery">
+      <div class="gallery-pair">
+        <div class="gallery-pair-label">Input Shaping — X Axis</div>
+        <div class="gallery-pair-imgs">
+          <img src="images/x_old.jpg" alt="X axis before"/>
+          <img src="images/x_new.jpg" alt="X axis after"/>
+        </div>
+      </div>
+      <div class="gallery-pair">
+        <div class="gallery-pair-label">Input Shaping — Y Axis</div>
+        <div class="gallery-pair-imgs">
+          <img src="images/y_old.jpg" alt="Y axis before"/>
+          <img src="images/y_new.png" alt="Y axis after"/>
+        </div>
+      </div>
+      <div class="gallery-pair">
+        <div class="gallery-pair-label">Benchy — Overhang</div>
+        <div class="gallery-pair-imgs">
+          <img src="images/Boat_old_overhang.jpg" alt="Overhang before"/>
+          <img src="images/Boat_new_overhang1.jpg" alt="Overhang after"/>
+        </div>
+      </div>
+      <div class="gallery-pair">
+        <div class="gallery-pair-label">Benchy — Ringing / Stringing</div>
+        <div class="gallery-pair-imgs">
+          <img src="images/Boat_old_ringing.jpg" alt="Ringing before"/>
+          <img src="images/Boat_new_ringing1.jpg" alt="Ringing after"/>
+        </div>
+      </div>
+      <div class="gallery-full">
+        <img src="images/boat_new.jpg" alt="Tuned benchy"/>
+      </div>
+    </div>
+  </section>
+
+</div>
+<footer>
+  <div class="container">
+    <div class="footer-inner">
+      <span>komo-248 · Klipper SV05</span>
+      <a href="https://komo-248.github.io/komo.github.io">← Portfolio</a>
+    </div>
+  </div>
+</footer>
+</body>
+</html>
