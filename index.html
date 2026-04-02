@@ -52,11 +52,12 @@
     /* GALLERY */
     .gallery { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--border); border: 1px solid var(--border); }
     .gallery-pair { background: var(--surface); padding: 20px; }
-    .gallery-pair-label { font-family: var(--mono); font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); margin-bottom: 12px; text-align: center; }
-    .gallery-pair-imgs { display: flex; gap: 8px; }
-    .gallery-pair-imgs img { width: 50%; object-fit: cover; border-radius: 2px; }
-    .gallery-full { grid-column: span 2; background: var(--surface); padding: 20px; }
-    .gallery-full img { width: 100%; max-height: 340px; object-fit: cover; border-radius: 2px; }
+    .gallery-pair-label { font-family: var(--mono); font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); margin-bottom: 10px; text-align: center; }
+    .gallery-pair-imgs { display: flex; gap: 6px; }
+    .gallery-pair-imgs img { width: 50%; object-fit: cover; border-radius: 2px; cursor: zoom-in; transition: transform 0.2s; }
+    .gallery-pair-imgs img:hover { transform: scale(1.02); }
+    .gallery-hero { grid-column: span 2; background: var(--surface); line-height: 0; }
+    .gallery-hero img { width: 100%; max-height: 480px; object-fit: cover; display: block; }
 
     @keyframes fadeUp { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
     .section:nth-child(2) { animation-delay: 0.05s; }
@@ -68,9 +69,36 @@
     .footer-inner span, .footer-inner a { font-family: var(--mono); font-size: 11px; color: var(--muted); text-decoration: none; letter-spacing: 0.04em; transition: color 0.15s; }
     .footer-inner a:hover { color: var(--accent); }
     @media (max-width: 600px) { .container { padding: 0 20px; } .gallery { grid-template-columns: 1fr; } .gallery-full { grid-column: span 1; } }
+  
+    /* SHOWCASE */
+    .showcase-item { cursor: pointer; border: 1px solid var(--border); transition: border-color 0.2s; display: flex; align-items: center; justify-content: center; background: var(--surface); overflow: hidden; padding: 12px; }
+    .showcase-item:hover { border-color: var(--accent); }
+    .showcase-item img { width: 100%; height: auto; display: block; }
+    .showcase-hint { font-family: var(--mono); font-size: 10px; color: var(--muted); letter-spacing: 0.06em; margin-top: 10px; }
+    /* LIGHTBOX */
+    .lightbox { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.92); z-index: 1000; align-items: center; justify-content: center; padding: 24px; }
+    .lightbox.open { display: flex; }
+    .lightbox img { max-width: 100%; max-height: 100%; object-fit: contain; display: block; }
+    .lightbox-close { position: fixed; top: 20px; right: 24px; font-family: var(--mono); font-size: 13px; color: rgba(255,255,255,0.6); cursor: pointer; letter-spacing: 0.08em; text-transform: uppercase; background: none; border: none; padding: 8px; transition: color 0.15s; }
+    .lightbox-close:hover { color: #fff; }
+    .lightbox-nav { position: fixed; top: 50%; transform: translateY(-50%); background: none; border: none; color: rgba(255,255,255,0.5); cursor: pointer; font-size: 28px; padding: 16px; transition: color 0.15s; }
+    .lightbox-nav:hover { color: #fff; }
+    .lightbox-prev { left: 8px; }
+    .lightbox-next { right: 8px; }
+    .lightbox-counter { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); font-family: var(--mono); font-size: 11px; color: rgba(255,255,255,0.4); letter-spacing: 0.06em; }
+
   </style>
 </head>
 <body>
+
+<div class="lightbox" id="lightbox">
+  <button class="lightbox-close" id="lb-close">ESC / Close</button>
+  <button class="lightbox-nav lightbox-prev" id="lb-prev">&#8592;</button>
+  <img id="lb-img" src="" alt=""/>
+  <button class="lightbox-nav lightbox-next" id="lb-next">&#8594;</button>
+  <div class="lightbox-counter" id="lb-counter"></div>
+</div>
+
 <div class="container">
 
   <header>
@@ -122,42 +150,43 @@
     </div>
   </section>
 
-  <!-- RESULTS GALLERY -->
+    <!-- RESULTS GALLERY -->
   <section class="section">
     <div class="section-label">Results</div>
-    <div class="gallery">
-      <div class="gallery-pair">
-        <div class="gallery-pair-label">Input Shaping — X Axis</div>
-        <div class="gallery-pair-imgs">
-          <img src="images/x_old.jpg" alt="X axis before"/>
-          <img src="images/x_new.jpg" alt="X axis after"/>
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px;">
+      <div>
+        <p style="font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:10px;text-align:center;">Input Shaping — X Axis &nbsp;|&nbsp; Before / After</p>
+        <div style="display:flex;gap:8px;">
+          <div class="showcase-item" data-src="images/x_old.jpg" style="flex:1;padding:8px;"><img src="images/x_old.jpg" alt="X before"/></div>
+          <div class="showcase-item" data-src="images/x_new.jpg" style="flex:1;padding:8px;"><img src="images/x_new.jpg" alt="X after"/></div>
         </div>
       </div>
-      <div class="gallery-pair">
-        <div class="gallery-pair-label">Input Shaping — Y Axis</div>
-        <div class="gallery-pair-imgs">
-          <img src="images/y_old.jpg" alt="Y axis before"/>
-          <img src="images/y_new.png" alt="Y axis after"/>
+      <div>
+        <p style="font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:10px;text-align:center;">Input Shaping — Y Axis &nbsp;|&nbsp; Before / After</p>
+        <div style="display:flex;gap:8px;">
+          <div class="showcase-item" data-src="images/y_old.jpg" style="flex:1;padding:8px;"><img src="images/y_old.jpg" alt="Y before"/></div>
+          <div class="showcase-item" data-src="images/y_new.png" style="flex:1;padding:8px;"><img src="images/y_new.png" alt="Y after"/></div>
         </div>
       </div>
-      <div class="gallery-pair">
-        <div class="gallery-pair-label">Benchy — Overhang</div>
-        <div class="gallery-pair-imgs">
-          <img src="images/Boat_old_overhang.jpg" alt="Overhang before"/>
-          <img src="images/Boat_new_overhang1.jpg" alt="Overhang after"/>
+      <div>
+        <p style="font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:10px;text-align:center;">Benchy — Overhang &nbsp;|&nbsp; Before / After</p>
+        <div style="display:flex;gap:8px;">
+          <div class="showcase-item" data-src="images/Boat_old_overhang.jpg" style="flex:1;padding:8px;"><img src="images/Boat_old_overhang.jpg" alt="Overhang before"/></div>
+          <div class="showcase-item" data-src="images/Boat_new_overhang1.jpg" style="flex:1;padding:8px;"><img src="images/Boat_new_overhang1.jpg" alt="Overhang after"/></div>
         </div>
       </div>
-      <div class="gallery-pair">
-        <div class="gallery-pair-label">Benchy — Ringing / Stringing</div>
-        <div class="gallery-pair-imgs">
-          <img src="images/Boat_old_ringing.jpg" alt="Ringing before"/>
-          <img src="images/Boat_new_ringing1.jpg" alt="Ringing after"/>
+      <div>
+        <p style="font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:10px;text-align:center;">Benchy — Ringing &nbsp;|&nbsp; Before / After</p>
+        <div style="display:flex;gap:8px;">
+          <div class="showcase-item" data-src="images/Boat_old_ringing.jpg" style="flex:1;padding:8px;"><img src="images/Boat_old_ringing.jpg" alt="Ringing before"/></div>
+          <div class="showcase-item" data-src="images/Boat_new_ringing1.jpg" style="flex:1;padding:8px;"><img src="images/Boat_new_ringing1.jpg" alt="Ringing after"/></div>
         </div>
-      </div>
-      <div class="gallery-full">
-        <img src="images/boat_new.jpg" alt="Tuned benchy"/>
       </div>
     </div>
+    <div class="showcase-item" data-src="images/boat_new.jpg" style="margin-top:12px;padding:0;border:1px solid var(--border);">
+      <img src="images/boat_new.jpg" alt="Tuned benchy" style="width:100%;display:block;"/>
+    </div>
+    <p class="showcase-hint">Click any image to view full size</p>
   </section>
 
 </div>
@@ -169,5 +198,33 @@
     </div>
   </div>
 </footer>
+<script>
+  const items = Array.from(document.querySelectorAll('.showcase-item'));
+  const lb = document.getElementById('lightbox');
+  const lbImg = document.getElementById('lb-img');
+  const lbCounter = document.getElementById('lb-counter');
+  let current = 0;
+  function open(idx) {
+    current = idx;
+    lbImg.src = items[current].dataset.src;
+    lbCounter.textContent = (current + 1) + ' / ' + items.length;
+    lb.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function close() { lb.classList.remove('open'); document.body.style.overflow = ''; }
+  function prev() { open((current - 1 + items.length) % items.length); }
+  function next() { open((current + 1) % items.length); }
+  items.forEach((el, i) => el.addEventListener('click', () => open(i)));
+  document.getElementById('lb-close').addEventListener('click', close);
+  document.getElementById('lb-prev').addEventListener('click', prev);
+  document.getElementById('lb-next').addEventListener('click', next);
+  lb.addEventListener('click', e => { if (e.target === lb) close(); });
+  document.addEventListener('keydown', e => {
+    if (!lb.classList.contains('open')) return;
+    if (e.key === 'Escape') close();
+    if (e.key === 'ArrowLeft') prev();
+    if (e.key === 'ArrowRight') next();
+  });
+</script>
 </body>
 </html>
